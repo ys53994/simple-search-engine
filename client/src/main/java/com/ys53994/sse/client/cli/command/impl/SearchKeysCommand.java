@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static com.ys53994.sse.client.cli.util.CliUtil.println;
 import static java.util.Arrays.asList;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class SearchKeysCommand implements Command {
     public void execute(String rawArguments) {
         final Collection<String> keys = searchEngineClient.search(asList(rawArguments.split("\\s+")));
 
-        if (!keys.isEmpty()) {
+        if (!isEmpty(keys)) {
             println("Found keys: " + keys.stream().collect(Collectors.joining(",")));
         } else {
             println("No any keys found");

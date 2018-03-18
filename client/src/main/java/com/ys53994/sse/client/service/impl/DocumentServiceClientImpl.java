@@ -77,9 +77,9 @@ public class DocumentServiceClientImpl implements DocumentServiceClient {
         final UriComponentsBuilder builder = fromHttpUrl(sseServerBaseUrl + RestApiDescriptor.DOCUMENT_PUBLIC_REST_API);
         tokens.forEach(token -> builder.queryParam("token", token));
         final RequestEntity requestEntity = new RequestEntity(HttpMethod.GET, builder.build().toUri());
-        final ResponseEntity<Collection<String>> responseEntity = restTemplate.exchange(requestEntity,
+        final ResponseEntity<Collection<String>> responseEntity = withExceptionHandling(() -> restTemplate.exchange(requestEntity,
                 new ParameterizedTypeReference<Collection<String>>() {
-                });
+                }));
 
         return responseEntity.getBody();
 
